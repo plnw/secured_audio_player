@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Audio Player</title>
+    <link rel="stylesheet" href="../static/styles.css">
+    <script>
+        
+        function generateRandomKey() {
+            const length = document.getElementById('key_length').value || 16; 
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let randomKey = '';
+            for (let i = 0; i < length; i++) {
+                randomKey += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            document.getElementById('randomKey').value = randomKey;
+            document.getElementById('key').value = ''; 
+            updateKeyStatus(); 
+        }
+
+        function toggleRandomKey() {
+            if (document.getElementById('generate_random').checked) {
+                generateRandomKey();
+                document.getElementById('randomKeyDiv').style.display = 'block';
+            } else {
+                document.getElementById('randomKeyDiv').style.display = 'none';
+                document.getElementById('randomKey').value = ''; 
+            }
+        }
+
+        function validateForm(event) {
+            const keyLength = parseInt(document.getElementById('key_length').value); 
+            const userKey = document.getElementById('key').value || document.getElementById('randomKey').value; 
+
+            if (document.getElementById('generate_random').checked) {
+                return true;
+            }
+
+            if (userKey.length !== keyLength) {
+                alert("Error: The key length must be " + keyLength + " characters.");
+                event.preventDefault(); 
+                return false;
+            }
+
+            const regex = /^[A-Za-z0-9]+$/;
+            if (!regex.test(userKey)) {
+                alert("Error: The key can only contain alphanumeric characters (letters and digits).");
+                event.preventDefault(); 
+                return false;
+            }
+
+            return true; 
+        }
+
+        function updateKeyStatus() {
+            const key = document.getElementById('key').value || document.getElementById('randomKey').value;
+            const keyLength = parseInt(document.getElementById('key_length').value);
+            const statusElement = document.getElementById('keyStatus');
+
+            if (key.length === keyLength) {
+                if (/^[A-Za-z0-9]+$/.test(key)) {
+                    statusElement.textContent = 'Valid Key';
+                    statusElement.style.color = 'green';
+                    document.getElementById('submitButton').disabled = false;
+                } else {
+                    statusElement.textContent = 'Invalid Key (only alphanumeric characters allowed)';
+                    statusElement.style.color = 'red';
+                    document.getElementById('submitButton').disabled = true;
+                }
+            } else {
+                statusElement.textContent = `Key must be ${keyLength} characters long`;
+                statusElement.style.color = 'red';
+                document.getElementById('submitButton').disabled = true;
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+    <h1>Secure Audio Player</h1>
+    
+    <form action="/next" method="POST" onsubmit="return validateForm(event)">
+        <label for="key">Enter your key (or leave blank for random key):</label><br>
+        <input type="text" id="key" name="key" placeholder="Enter key" onkeyup="updateKeyStatus()"><br><br>
+
+        <label for="key_length">Choose the key length:</label><br>
+        <select id="key_length" name="key_length" onchange="updateKeyStatus()">
+            <option value="16">16 characters (128 bits)</option>
+            <option value="24">24 characters (192 bits)</option>
+            <option value="32">32 characters (256 bits)</option>
+        </select><br><br>
+
+        <input type="checkbox" id="generate_random" name="generate_random" value="true" onclick="toggleRandomKey()">
+        <label for="generate_random">Generate random key</label><br><br>
+
+        <div id="randomKeyDiv" style="display: none;">
+            <label for="randomKey">Generated Random Key:</label><br>
+            <input type="text" id="randomKey" name="randomKey" readonly><br><br>
+        </div>
+
+        <div id="keyStatus" style="font-weight: bold; margin-top: 10px;"></div><br>
+
+        <input type="submit" id="submitButton" value="Next" disabled>
+    </form>
+</div>
+</body>
+</html>

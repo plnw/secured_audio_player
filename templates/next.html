@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encrypt or Decrypt</title>
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+<body>
+    <div class="container">
+    <h1>Choose Action</h1>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="key" value="{{ key }}">
+        <input type="file" name="file" accept=".wav,.mp3,.enc" required><br><br>
+        
+        <label for="action">Choose an action:</label>
+        <select name="action" id="action" required>
+            <option value="encrypt">Encrypt</option>
+            <option value="decrypt">Decrypt</option>
+        </select>
+        <br><br>
+        <input type="submit" value="Submit">
+    </form>
+    </div>
+</body>
+</html>

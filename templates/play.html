@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Play Decrypted Audio</title>
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+<body>
+    <div class="container">
+    <h1>Decrypted Audio</h1>
+    <audio controls>
+        <source src="{{ file_url }}" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio>
+    <br><br><br><br>
+    <a href="{{ file_url }}" download>Download Decrypted File</a>
+    </div>  
+</body>
+</html>
