@@ -17,3 +17,11 @@ This is a Flask-based Secured Audio Player that allows users to encrypt and decr
 - Crypto.Cipher (PyCryptodome) for AES encryption
 - HTML, CSS, JavaScript for the frontend
 - Render for deployment
+
+### Demo
+https://secured-audio-player.onrender.com/
+
+### Group member
+- 6588066 Manasawan Pewnoul
+- 6588120 Natchaya Yoosukdee
+- 6588177 Natnicha Kittidilok
