@@ -13,7 +13,7 @@ This is a Flask-based Secured Audio Player that allows users to encrypt and decr
 	•	Random Key Generation for encryption
 
 ### Technologies Used
-  •	Flask (Python web framework)
+	•	Flask (Python web framework)
 	•	Crypto.Cipher (PyCryptodome) for AES encryption
 	•	HTML, CSS, JavaScript for the frontend
 	•	Render for deployment
